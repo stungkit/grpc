@@ -20,8 +20,8 @@
 
 #include <memory>
 
-#include "gtest/gtest.h"
 #include "src/core/lib/experiments/config.h"
+#include "testing/base/public/gunit.h"
 
 #ifndef GRPC_EXPERIMENTS_ARE_FINAL
 
