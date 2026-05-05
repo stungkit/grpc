@@ -2809,6 +2809,7 @@ grpc_cc_library(
         "//src/core:arena",
         "//src/core:channel_args",
         "//src/core:channel_init",
+        "//src/core:channel_stack_type",
         "//src/core:closure",
         "//src/core:default_event_engine",
         "//src/core:error",

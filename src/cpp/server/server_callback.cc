@@ -23,6 +23,7 @@
 #include "src/core/call/server_call.h"
 #include "src/core/ext/transport/chttp2/transport/chttp2_transport.h"
 #include "src/core/lib/surface/call.h"
+#include "src/core/lib/surface/channel_stack_type.h"
 #include "src/core/server/server.h"
 #include "src/core/transport/session_endpoint.h"
 #include "absl/log/log.h"
@@ -58,10 +59,9 @@ void BindSessionToInnerServer(grpc_call* call, grpc::Server* inner_server) {
       args, grpc_core::OrphanablePtr<grpc_endpoint>(endpoint),
       /*is_client=*/false);
 
-  // TODO(snohria): This should create a different call stack.
-  auto status =
-      core_inner_server->SetupTransport(transport_ptr,
-                                        /*accepting_pollset=*/nullptr, args);
+  auto status = core_inner_server->SetupTransport(
+      transport_ptr, /*accepting_pollset=*/nullptr, args,
+      GRPC_SERVER_VIRTUAL_CHANNEL);
   if (!status.ok()) {
     LOG(ERROR) << "SetupTransport failed: " << status;
     grpc_core::Call::FromC(call)->CancelWithError(status);
